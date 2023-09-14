@@ -32,10 +32,9 @@ class TestIsoscelesTriangle:
         assert isosceles_triangle.name == f"Triangle {side_a}, {side_b}," \
                                           f" {side_c}", \
             f"Incorrect name:{isosceles_triangle.name}"
-        assert isosceles_triangle.get_area, \
-            f"Incorrect area:{isosceles_triangle.get_area}"
-        assert isosceles_triangle.get_perimeter, \
-            f"Incorrect perimeter:{isosceles_triangle.get_perimeter}"
+        assert isosceles_triangle.get_area, f"Can't get area"
+        assert isosceles_triangle.get_perimeter, f"Can't get perimeter"
+        assert isosceles_triangle.add_area, f"Can't add area"
 
     @pytest.mark.parametrize("side_a, side_b, side_c",
                              [(random_punctuations(), random_punctuations(),
@@ -79,10 +78,9 @@ class TestRectangularTriangle:
         assert rectangular_triangle.name == f"Triangle {side_a}, {side_b}," \
                                             f" {side_c}", \
             f"Incorrect name:{rectangular_triangle.name}"
-        assert rectangular_triangle.get_area, \
-            f"Incorrect area:{rectangular_triangle.get_area}"
-        assert rectangular_triangle.get_perimeter, \
-            f"Incorrect perimeter:{rectangular_triangle.get_perimeter}"
+        assert rectangular_triangle.get_area, f"Can't get area"
+        assert rectangular_triangle.get_perimeter, f"Can't get perimeter"
+        assert rectangular_triangle.add_area, f"Can't add area"
 
     @pytest.mark.parametrize("side_a, side_b, side_c",
                              [(random_punctuations(), random_punctuations(),
@@ -140,10 +138,9 @@ class TestRectangle:
         assert rectangle.name == f"Rectangle {side_a}, {side_b}, {side_c}," \
                                  f" {side_d}", \
             f"Incorrect name:{rectangle.name}"
-        assert rectangle.get_area, \
-            f"Incorrect area:{rectangle.get_area}"
-        assert rectangle.get_perimeter, \
-            f"Incorrect perimeter:{rectangle.get_perimeter}"
+        assert rectangle.get_area, f"Can't get area"
+        assert rectangle.get_perimeter, f"Can't get perimeter"
+        assert rectangle.add_area, f"Can't add area"
 
     @pytest.mark.parametrize("side_a, side_b, side_c, side_d",
                              [(random_punctuations(), random_punctuations(),
@@ -199,10 +196,9 @@ class TestSquare:
         assert square.name == f"Square {side_a}, {side_b}, {side_c}," \
                               f" {side_d}", \
             f"Incorrect name:{square.name}"
-        assert square.get_area, \
-            f"Incorrect area:{square.get_area}"
-        assert square.get_perimeter, \
-            f"Incorrect perimeter:{square.get_perimeter}"
+        assert square.get_area, f"Can't get area"
+        assert square.get_perimeter, f"Can't get perimeter"
+        assert square.add_area, f"Can't add area"
 
     @pytest.mark.parametrize("side_a, side_b, side_c, side_d",
                              [(random_punctuations(), random_punctuations(),
@@ -241,10 +237,9 @@ class TestCircle:
         circle = Circle(radius)
         assert circle.name == f"Circle with radius {radius}", \
             f"Incorrect name:{circle.name}"
-        assert circle.get_area, \
-            f"Incorrect area:{circle.get_area}"
-        assert circle.get_perimeter, \
-            f"Incorrect perimeter:{circle.get_perimeter}"
+        assert circle.get_area, f"Can't get area"
+        assert circle.get_perimeter, f"Can't get perimeter"
+        assert circle.add_area, f"Can't add area"
 
     @pytest.mark.parametrize("radius",
                              [random_punctuations(),
