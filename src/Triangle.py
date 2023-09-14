@@ -1,9 +1,9 @@
 import math
 
-from src.Figure import Figure, ABC
+from src.Figure import Figure
 
 
-class Triangle(Figure, ABC):
+class Triangle(Figure):
     """Declare triangle params"""
 
     def __init__(self, side_a, side_b, side_c):
