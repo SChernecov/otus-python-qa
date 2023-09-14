@@ -8,16 +8,16 @@ punctuations = r"""!"#$%&'()*+,-—–./:;<=>?@[\]^_`{|}~№«»“”„‹›�
 whitespaces = ' \t\n\r\v\f'
 
 
-def random_small_side():
+def random_small_side(start=1, end=10):
     """Generate random side between 1 and 10"""
 
-    return random.randint(1, 10)
+    return random.randint(start, end)
 
 
-def random_big_side():
+def random_big_side(start=10, end=100):
     """Generate random side between 10 and 100"""
 
-    return random.randint(10, 100)
+    return random.randint(start, end)
 
 
 def random_side():
@@ -26,7 +26,7 @@ def random_side():
     return random.choice([random_small_side(), random_big_side()])
 
 
-def random_lower_letters():
+def random_letters():
     """Generate random ru and en letters"""
 
     letters = ru_lowercase + en_lowercase + ru_uppercase + en_uppercase
@@ -55,3 +55,15 @@ def negative_side():
     """Generate random side between -1 and -100"""
 
     return random.randint(-100, -1)
+
+
+def random_float():
+    """Generate random float between 0.1 and 100"""
+
+    return random.uniform(0.1, 100.0)
+
+
+def random_int():
+    """Generate random number between 1 and 100"""
+
+    return random.randint(1, 100)
