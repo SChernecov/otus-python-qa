@@ -49,3 +49,9 @@ def random_bool():
     """Generate random bool param"""
 
     return random.choice([True, False])
+
+
+def negative_side():
+    """Generate random side between -1 and -100"""
+
+    return random.randint(-100, -1)
