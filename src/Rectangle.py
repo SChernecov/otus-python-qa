@@ -1,4 +1,4 @@
-from src import Figure
+from src.Figure import Figure
 
 
 class Rectangle(Figure):
@@ -11,8 +11,10 @@ class Rectangle(Figure):
             raise ValueError("Sides must be integers")
         if side_a != side_c or side_b != side_d:
             raise ValueError("This is not a rectangle")
-        if side_a <= 0 or side_b <= 0 or side_c or side_d <= 0:
+        if side_a <= 0 or side_b <= 0 or side_c <= 0 or side_d <= 0:
             raise ValueError("Sides must be greater, then zero")
+        if side_a == side_b or side_c == side_d:
+            raise ValueError("This is square, not rectangle")
         self.side_a = side_a
         self.side_b = side_b
         self.side_c = side_c
