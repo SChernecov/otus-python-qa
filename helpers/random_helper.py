@@ -20,7 +20,7 @@ def random_big_side():
     return random.randint(10, 100)
 
 
-def random_triangle_side():
+def random_side():
     """Generate random isosceles triangle side"""
 
     return random.choice([random_small_side(), random_big_side()])
