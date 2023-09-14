@@ -1,8 +1,9 @@
 from helpers.random_helper import random_big_side, random_small_side, \
-    random_triangle_side, random_lower_letters, random_punctuations, \
+    random_side, random_lower_letters, random_punctuations, \
     random_whitespaces, random_bool, negative_side
 from src.Rectangle import Rectangle
 from src.Triangle import Triangle
+from src.Square import Square
 
 import pytest
 
@@ -10,7 +11,7 @@ import pytest
 class TestIsoscelesTriangle:
     """Testing isosceles rectangle"""
 
-    isosceles_triangle_side = random_triangle_side()
+    isosceles_triangle_side = random_side()
 
     @pytest.mark.parametrize("side_a, side_b, side_c",
                              [(isosceles_triangle_side,
@@ -66,8 +67,8 @@ class TestRectangularTriangle:
                                random_small_side()),
                               (random_big_side(), random_big_side(),
                                random_big_side()),
-                              (random_triangle_side(), random_triangle_side(),
-                               random_triangle_side())],
+                              (random_side(), random_side(),
+                               random_side())],
                              ids=["small sides",
                                   "big sides",
                                   "big and small sides"])
@@ -114,6 +115,8 @@ class TestRectangle:
     rectangle_big_side_a_and_side_c = random_big_side()
     rectangle_big_side_b_and_side_d = random_big_side()
 
+    equal_rectangle_side = random_side()
+
     @pytest.mark.parametrize("side_a, side_b, side_c, side_d",
                              [(rectangle_small_side_a_and_side_c,
                                rectangle_small_side_b_and_side_d,
@@ -154,13 +157,17 @@ class TestRectangle:
                               (negative_side(), negative_side(),
                                negative_side(), negative_side()),
                               (random_small_side(), random_small_side(),
-                               random_small_side(), random_small_side())],
+                               random_small_side(), random_small_side()),
+                              (equal_rectangle_side, equal_rectangle_side,
+                               equal_rectangle_side, equal_rectangle_side)
+                              ],
                              ids=["punctuations",
                                   "lower_letters",
                                   "whitespaces",
                                   "boolean",
                                   "zero",
                                   "negative numbers",
+                                  "not equal sides",
                                   "equal sides"
                                   ])
     def test_invalid_rectangle(self, side_a, side_b, side_c, side_d):
@@ -170,7 +177,57 @@ class TestRectangle:
 
 class TestSquare:
     """Testing square"""
-    pass
+
+    small_square_side = random_small_side()
+    big_square_side = random_big_side()
+
+    @pytest.mark.parametrize("side_a, side_b, side_c, side_d",
+                             [(small_square_side,
+                               small_square_side,
+                               small_square_side,
+                               small_square_side),
+                              (big_square_side,
+                               big_square_side,
+                               big_square_side,
+                               big_square_side)],
+                             ids=["small sides",
+                                  "big sides"])
+    def test_valid_rectangle(self, side_a, side_b, side_c, side_d):
+        square = Square(side_a, side_b, side_c, side_d)
+
+        assert square.name == f"Square {side_a}, {side_b}, {side_c}," \
+                              f" {side_d}", \
+            f"Incorrect name:{square.name}"
+        assert square.get_area, \
+            f"Incorrect area:{square.get_area}"
+        assert square.get_perimeter, \
+            f"Incorrect perimeter:{square.get_perimeter}"
+
+    @pytest.mark.parametrize("side_a, side_b, side_c, side_d",
+                             [(random_punctuations(), random_punctuations(),
+                               random_punctuations(), random_punctuations()),
+                              (random_lower_letters(), random_lower_letters(),
+                               random_lower_letters(), random_lower_letters()),
+                              (random_whitespaces(), random_whitespaces(),
+                               random_whitespaces(), random_whitespaces()),
+                              (random_bool(), random_bool(), random_bool(),
+                               random_bool()),
+                              (0, 0, 0, 0),
+                              (negative_side(), negative_side(),
+                               negative_side(), negative_side()),
+                              (small_square_side, small_square_side,
+                               big_square_side, big_square_side)],
+                             ids=["punctuations",
+                                  "lower_letters",
+                                  "whitespaces",
+                                  "boolean",
+                                  "zero",
+                                  "negative numbers",
+                                  "not equal sides"
+                                  ])
+    def test_invalid_rectangle(self, side_a, side_b, side_c, side_d):
+        with pytest.raises(ValueError):
+            Square(side_a, side_b, side_c, side_d)
 
 
 class TestCircle:
