@@ -1,9 +1,10 @@
 from helpers.random_helper import random_big_side, random_small_side, \
-    random_side, random_lower_letters, random_punctuations, \
-    random_whitespaces, random_bool, negative_side
+    random_side, random_letters, random_punctuations, \
+    random_whitespaces, random_bool, negative_side, random_float, random_int
 from src.Rectangle import Rectangle
 from src.Triangle import Triangle
 from src.Square import Square
+from src.Circle import Circle
 
 import pytest
 
@@ -39,8 +40,8 @@ class TestIsoscelesTriangle:
     @pytest.mark.parametrize("side_a, side_b, side_c",
                              [(random_punctuations(), random_punctuations(),
                                random_punctuations()),
-                              (random_lower_letters(), random_lower_letters(),
-                               random_lower_letters()),
+                              (random_letters(), random_letters(),
+                               random_letters()),
                               (random_whitespaces(), random_whitespaces(),
                                random_whitespaces()),
                               (random_bool(), random_bool(), random_bool()),
@@ -48,7 +49,7 @@ class TestIsoscelesTriangle:
                               (negative_side(), negative_side(),
                                negative_side())],
                              ids=["punctuations",
-                                  "lower_letters",
+                                  "letters",
                                   "whitespaces",
                                   "boolean",
                                   "zero",
@@ -86,8 +87,8 @@ class TestRectangularTriangle:
     @pytest.mark.parametrize("side_a, side_b, side_c",
                              [(random_punctuations(), random_punctuations(),
                                random_punctuations()),
-                              (random_lower_letters(), random_lower_letters(),
-                               random_lower_letters()),
+                              (random_letters(), random_letters(),
+                               random_letters()),
                               (random_whitespaces(), random_whitespaces(),
                                random_whitespaces()),
                               (random_bool(), random_bool(), random_bool()),
@@ -95,7 +96,7 @@ class TestRectangularTriangle:
                               (negative_side(), negative_side(),
                                negative_side())],
                              ids=["punctuations",
-                                  "lower_letters",
+                                  "letters",
                                   "whitespaces",
                                   "boolean",
                                   "zero",
@@ -109,11 +110,11 @@ class TestRectangularTriangle:
 class TestRectangle:
     """Testing rectangle"""
 
-    rectangle_small_side_a_and_side_c = random_small_side()
-    rectangle_small_side_b_and_side_d = random_small_side()
+    rectangle_small_side_a_and_side_c = random_small_side(1, 5)
+    rectangle_small_side_b_and_side_d = random_small_side(6, 10)
 
-    rectangle_big_side_a_and_side_c = random_big_side()
-    rectangle_big_side_b_and_side_d = random_big_side()
+    rectangle_big_side_a_and_side_c = random_big_side(10, 50)
+    rectangle_big_side_b_and_side_d = random_big_side(51, 100)
 
     equal_rectangle_side = random_side()
 
@@ -147,8 +148,8 @@ class TestRectangle:
     @pytest.mark.parametrize("side_a, side_b, side_c, side_d",
                              [(random_punctuations(), random_punctuations(),
                                random_punctuations(), random_punctuations()),
-                              (random_lower_letters(), random_lower_letters(),
-                               random_lower_letters(), random_lower_letters()),
+                              (random_letters(), random_letters(),
+                               random_letters(), random_letters()),
                               (random_whitespaces(), random_whitespaces(),
                                random_whitespaces(), random_whitespaces()),
                               (random_bool(), random_bool(), random_bool(),
@@ -162,7 +163,7 @@ class TestRectangle:
                                equal_rectangle_side, equal_rectangle_side)
                               ],
                              ids=["punctuations",
-                                  "lower_letters",
+                                  "letters",
                                   "whitespaces",
                                   "boolean",
                                   "zero",
@@ -192,7 +193,7 @@ class TestSquare:
                                big_square_side)],
                              ids=["small sides",
                                   "big sides"])
-    def test_valid_rectangle(self, side_a, side_b, side_c, side_d):
+    def test_valid_square(self, side_a, side_b, side_c, side_d):
         square = Square(side_a, side_b, side_c, side_d)
 
         assert square.name == f"Square {side_a}, {side_b}, {side_c}," \
@@ -206,8 +207,8 @@ class TestSquare:
     @pytest.mark.parametrize("side_a, side_b, side_c, side_d",
                              [(random_punctuations(), random_punctuations(),
                                random_punctuations(), random_punctuations()),
-                              (random_lower_letters(), random_lower_letters(),
-                               random_lower_letters(), random_lower_letters()),
+                              (random_letters(), random_letters(),
+                               random_letters(), random_letters()),
                               (random_whitespaces(), random_whitespaces(),
                                random_whitespaces(), random_whitespaces()),
                               (random_bool(), random_bool(), random_bool(),
@@ -218,18 +219,46 @@ class TestSquare:
                               (small_square_side, small_square_side,
                                big_square_side, big_square_side)],
                              ids=["punctuations",
-                                  "lower_letters",
+                                  "letters",
                                   "whitespaces",
                                   "boolean",
                                   "zero",
                                   "negative numbers",
                                   "not equal sides"
                                   ])
-    def test_invalid_rectangle(self, side_a, side_b, side_c, side_d):
+    def test_invalid_square(self, side_a, side_b, side_c, side_d):
         with pytest.raises(ValueError):
             Square(side_a, side_b, side_c, side_d)
 
 
 class TestCircle:
     """Testing circle"""
-    pass
+
+    @pytest.mark.parametrize("radius",
+                             [random_float(), random_int()],
+                             ids=["float", "integer"])
+    def test_valid_circle(self, radius):
+        circle = Circle(radius)
+        assert circle.name == f"Circle with radius {radius}", \
+            f"Incorrect name:{circle.name}"
+        assert circle.get_area, \
+            f"Incorrect area:{circle.get_area}"
+        assert circle.get_perimeter, \
+            f"Incorrect perimeter:{circle.get_perimeter}"
+
+    @pytest.mark.parametrize("radius",
+                             [random_punctuations(),
+                              random_letters(),
+                              random_whitespaces(),
+                              random_bool(),
+                              0,
+                              negative_side()],
+                             ids=["punctuations",
+                                  "letters",
+                                  "whitespaces",
+                                  "boolean",
+                                  "zero",
+                                  "negative numbers"])
+    def test_invalid_circle(self, radius):
+        with pytest.raises(ValueError):
+            Circle(radius)
