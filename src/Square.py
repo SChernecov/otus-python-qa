@@ -1,23 +1,17 @@
-from src.Figure import Figure
+from src.Rectangle import Rectangle
 
 
-class Square(Figure):
+class Square(Rectangle):
     """Declare square params"""
 
-    def __init__(self, side_a, side_b, side_c, side_d):
-        super().__init__()
-        if type(side_a) != int or type(side_b) != int or type(
-                side_c) != int or type(side_d) != int:
+    def __init__(self, side):
+        super().__init__(side, side)
+        if type(side) != int:
             raise ValueError("Sides must be integers")
-        if side_a != side_c != side_b != side_d:
-            raise ValueError("This is not a square")
-        if side_a <= 0 or side_b <= 0 or side_c <= 0 or side_d <= 0:
+        if side <= 0:
             raise ValueError("Sides must be greater, then zero")
-        self.side_a = side_a
-        self.side_b = side_b
-        self.side_c = side_c
-        self.side_d = side_d
-        self.name = f"Square {side_a}, {side_b}, {side_c}, {side_d}"
+        self.side_a = side
+        self.name = f"Square {side}"
 
     @property
     def get_area(self):
