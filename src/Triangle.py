@@ -19,17 +19,7 @@ class Triangle(Figure):
 
     @property
     def get_area(self):
-        if self.side_a == self.side_b:
-            height = math.sqrt(self.side_a ** 2 - (self.side_b / 2) ** 2)
-            return self.get_area_isosceles_triangle(height)
-        if self.side_a != self.side_b:
-            return self.get_area_rectangular_triangle()
-
-    def get_area_rectangular_triangle(self):
         return (self.side_a * self.side_b) / 2
-
-    def get_area_isosceles_triangle(self, height):
-        return 1 / 2 * self.side_b * height
 
     @property
     def get_perimeter(self):
