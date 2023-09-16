@@ -8,7 +8,7 @@ class Circle(Figure):
 
     def __init__(self, radius):
         super().__init__()
-        if type(radius) != float and type(radius) != int:
+        if type(radius) != int and type(radius) != int:
             raise ValueError("Radius must be float or int")
         if radius <= 0:
             raise ValueError("Radius must be greater, then zero")
