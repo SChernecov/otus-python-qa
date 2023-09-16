@@ -1,4 +1,5 @@
 import math
+from math import sqrt
 
 from src.Figure import Figure
 
@@ -12,8 +13,8 @@ class Triangle(Figure):
             raise ValueError("Sides must be integers")
         if side_a <= 0 or side_b <= 0 or side_c <= 0:
             raise ValueError("Sides must be greater, then zero")
-        if side_a + side_b > side_c or side_a + side_c > side_b \
-                or side_b + side_c > side_a:
+        if side_a + side_b < side_c or side_b + side_c < side_a or \
+                side_a + side_c < side_b:
             raise ValueError(
                 "The length of side must be less, than the sum of the lengths"
                 " two other sides")
@@ -24,7 +25,9 @@ class Triangle(Figure):
 
     @property
     def get_area(self):
-        return (self.side_a * self.side_b) / 2
+        p = self.get_perimeter / 2
+        return sqrt(
+            p * (p - self.side_a) * (p - self.side_b) * (p - self.side_c))
 
     @property
     def get_perimeter(self):
