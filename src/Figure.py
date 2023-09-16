@@ -14,4 +14,4 @@ class Figure(ABC):
     def add_area(self, other_figure):
         if not isinstance(other_figure, Figure):
             raise AssertionError("Can't add area")
-        return self.get_area() + other_figure.add_area
+        return self.get_area + other_figure.get_area
