@@ -13,15 +13,13 @@ class TestTriangle:
     """Testing triangle"""
 
     def test_valid_triangle(self):
-        big_side = random_big_side(19, 100)
-        small_side = random_small_side(1, 9)
-        triangle = Triangle(big_side, small_side, small_side)
+        triangle = Triangle(5, 40, 40)
 
-        assert triangle.name == f"Triangle {big_side}, {small_side}," \
-                                f" {small_side}", \
+        assert triangle.name == f"Triangle {5}, {40}," \
+                                f" {40}", \
             f"Incorrect name:{triangle.name}"
-        assert triangle.get_area, "Can't get area"
-        assert triangle.get_perimeter, "Can't get perimeter"
+        assert round(triangle.get_area) == 100, "Wrong area"
+        assert triangle.get_perimeter == 85, "Wrong perimeter"
 
     @pytest.mark.parametrize("side_a, side_b, side_c",
                              [(random_punctuations(), random_punctuations(),
@@ -34,9 +32,7 @@ class TestTriangle:
                               (0, 0, 0),
                               (negative_side(), negative_side(),
                                negative_side()),
-                              (random_small_side(10, 10),
-                               random_small_side(10, 10),
-                               random_big_side(10, 19))],
+                              (111, 1, 1)],
                              ids=["punctuations",
                                   "letters",
                                   "whitespaces",
@@ -45,22 +41,19 @@ class TestTriangle:
                                   "negative numbers",
                                   "one side less than the sum of the lengths"
                                   ])
+    @pytest.mark.repeat(1)
     def test_invalid_triangle(self, side_a, side_b, side_c):
         with pytest.raises(ValueError):
             Triangle(side_a, side_b, side_c)
 
     @pytest.mark.parametrize("figure",
-                             [Triangle(random_big_side(19, 100),
-                                       random_small_side(1, 9),
-                                       random_small_side(1, 9)),
+                             [Triangle(5, 40, 40),
                               Rectangle(random_side(), random_side()),
                               Square(random_side()),
                               Circle(random_int())],
                              ids=["Triangle", "Rectangle", "Square", "Circle"])
     def test_triangle_add_area(self, figure):
-        triangle = Triangle(random_big_side(19, 100),
-                            random_small_side(1, 9),
-                            random_small_side(1, 9))
+        triangle = Triangle(5, 40, 40)
 
         assert triangle.add_area(figure) == triangle.get_area \
                + figure.get_area, "Wrong area"
@@ -69,23 +62,24 @@ class TestTriangle:
 class TestRectangle:
     """Testing rectangle"""
 
+    small_side = random_small_side(1, 9)
+    big_side = random_big_side(10, 100)
+
     @pytest.mark.parametrize("side_a, side_b",
-                             [(random_small_side(),
-                               random_small_side(),),
-                              (random_big_side(),
-                               random_big_side()),
-                              (random_small_side(),
-                               random_big_side())],
+                             [(small_side,
+                               small_side),
+                              (big_side,
+                               big_side)],
                              ids=["small sides",
-                                  "big sides",
-                                  "big and small sides"])
+                                  "big sides"])
     def test_valid_rectangle(self, side_a, side_b):
         rectangle = Rectangle(side_a, side_b)
 
         assert rectangle.name == f"Rectangle {side_a}, {side_b}", \
             f"Incorrect name:{rectangle.name}"
-        assert rectangle.get_area, "Can't get area"
-        assert rectangle.get_perimeter, "Can't get perimeter"
+        assert rectangle.get_area == side_a * side_b, "Wrong"
+        assert rectangle.get_perimeter == 2 * (side_a + side_b), \
+            "Wrong perimeter"
 
     @pytest.mark.parametrize("side_a, side_b",
                              [(random_punctuations(), random_punctuations()),
@@ -106,9 +100,7 @@ class TestRectangle:
             Rectangle(side_a, side_b)
 
     @pytest.mark.parametrize("figure",
-                             [Triangle(random_big_side(19, 100),
-                                       random_small_side(1, 9),
-                                       random_small_side(1, 9)),
+                             [Triangle(5, 40, 40),
                               Square(random_side()),
                               Circle(random_int())],
                              ids=["Triangle", "Square", "Circle"])
@@ -128,8 +120,8 @@ class TestSquare:
 
         assert square.name == f"Square {side}", \
             f"Incorrect name:{square.name}"
-        assert square.get_area, "Can't get area"
-        assert square.get_perimeter, "Can't get perimeter"
+        assert square.get_area == side ** 2, "Wrong area"
+        assert square.get_perimeter == side * 4, "Wrong perimeter"
 
     @pytest.mark.parametrize("side_a",
                              [random_punctuations(), random_letters(),
@@ -147,9 +139,7 @@ class TestSquare:
             Square(side_a)
 
     @pytest.mark.parametrize("figure",
-                             [Triangle(random_big_side(19, 100),
-                                       random_small_side(1, 9),
-                                       random_small_side(1, 9)),
+                             [Triangle(5, 40, 40),
                               Rectangle(random_side(), random_side()),
                               Square(random_side()),
                               Circle(random_int())],
@@ -168,12 +158,15 @@ class TestCircle:
                              [random_float(), random_int()],
                              ids=["float", "integer"])
     def test_valid_circle(self, radius):
+        import math
+
         circle = Circle(radius)
 
         assert circle.name == f"Circle with radius {radius}", \
             f"Incorrect name:{circle.name}"
-        assert circle.get_area, "Can't get area"
-        assert circle.get_perimeter, "Can't get perimeter"
+        assert circle.get_area == math.pi * (radius ** 2), "Can't get area"
+        assert circle.get_perimeter == 2 * math.pi * radius, \
+            "Can't get perimeter"
 
     @pytest.mark.parametrize("radius",
                              [random_punctuations(),
@@ -193,9 +186,7 @@ class TestCircle:
             Circle(radius)
 
     @pytest.mark.parametrize("figure",
-                             [Triangle(random_big_side(19, 100),
-                                       random_small_side(1, 9),
-                                       random_small_side(1, 9)),
+                             [Triangle(5, 40, 40),
                               Rectangle(random_side(), random_side()),
                               Square(random_side()),
                               Circle(random_int())],
