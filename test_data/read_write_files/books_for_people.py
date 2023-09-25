@@ -34,8 +34,7 @@ with OpenFile(USERS_FILE, "r") as file:
 
     books_for_persons = []
 
-    for i in range(len(users)):
-        user = users[i]
+    for i, user in enumerate(users):
         person = {
             "name": user["name"],
             "gender": user["gender"],
@@ -44,12 +43,14 @@ with OpenFile(USERS_FILE, "r") as file:
             "books": []
         }
 
+        end_idx = 0
+        start_idx = end_idx
+        end_idx += books_per_user
+
         if i < remainder:
-            for _ in range(i * books_per_user, (i + 1) * books_per_user + 1):
-                person["books"].append(books[_])
-        else:
-            for _ in range(i * books_per_user, (i + 1) * books_per_user):
-                person["books"].append(books[_])
+            end_idx += 1
+
+        person["books"] = books[start_idx: end_idx]
 
         books_for_persons.append(person)
 
