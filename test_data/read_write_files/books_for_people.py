@@ -33,6 +33,7 @@ with OpenFile(USERS_FILE, "r") as file:
     remainder = num_books % num_users
 
     books_for_persons = []
+    end_idx = 0
 
     for i, user in enumerate(users):
         person = {
@@ -43,7 +44,6 @@ with OpenFile(USERS_FILE, "r") as file:
             "books": []
         }
 
-        end_idx = 0
         start_idx = end_idx
         end_idx += books_per_user
 
