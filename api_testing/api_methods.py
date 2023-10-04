@@ -13,7 +13,7 @@ class DogApiServiceClient(ApiClient):
     def get_random_breed(self):
         breeds = []
         response = self.get(path="breeds/list/all")
-        for key, value in enumerate(response.json()["message"]):
+        for value in response.json()["message"]:
             breeds.append(value)
         return random.choices(breeds)[0]
 

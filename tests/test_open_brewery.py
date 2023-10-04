@@ -15,11 +15,16 @@ class TestOpenBrewery:
         assert r.status_code == 200, "wrong status code"
         assert len(r.json()) == random_page_size, "wrong len"
 
-    def test_list_breweries_per_page_max_len(self, client_open_brewery):
+    @pytest.mark.parametrize("page", [random_integer(0, 200),
+                                      random_integer(0, 2147483647)])
+    def test_list_breweries_per_page_max_len(self, client_open_brewery, page):
         r = client_open_brewery.get(path="v1/breweries",
-                                    params={"per_page": "201"})
+                                    params={"per_page": f"{page}"})
         assert r.status_code == 200, "wrong status code"
-        assert len(r.json()) == 200, "wrong page len"
+        if len(r.json()) == page:
+            assert len(r.json()) == page, "wrong page len"
+        else:
+            assert len(r.json()) == 200, "wrong page len"
 
     def test_breweries_by_postal(self, client_open_brewery, get_postal):
         postal = get_postal.get_random_postal()
