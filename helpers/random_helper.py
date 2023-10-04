@@ -6,6 +6,7 @@ en_lowercase = 'abcdefghijklmnopqrstuvwxyz'
 en_uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 punctuations = r"""!"#$%&'()*+,-—–./:;<=>?@[\]^_`{|}~№«»“”„‹›‘’‚"""
 whitespaces = ' \t\n\r\v\f'
+digits = '0123456789'
 
 
 def random_small_side(start=1, end=10):
@@ -67,3 +68,15 @@ def random_int():
     """Generate random number between 1 and 100"""
 
     return random.randint(1, 100)
+
+
+def random_integer(start=-2147483647, end=2147483647):
+    """Generate random number between -2147483647 and 2147483647 for default"""
+
+    return random.randint(start, end)
+
+
+def random_digits():
+    """Generate random digits"""
+
+    return ''.join(random.choice(digits) for _ in range(5))
